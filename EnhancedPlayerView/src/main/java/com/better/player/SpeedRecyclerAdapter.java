@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.media3.common.util.UnstableApi;
 import androidx.media3.exoplayer.ExoPlayer;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,7 +16,6 @@ import com.better.player.databinding.RecylerSpeedBinding;
 import java.util.List;
 import java.util.Optional;
 
-@UnstableApi
 public class SpeedRecyclerAdapter extends RecyclerView.Adapter<SpeedRecyclerAdapter.ViewHolder> {
 
     private final ExoPlayer player;
@@ -40,16 +38,16 @@ public class SpeedRecyclerAdapter extends RecyclerView.Adapter<SpeedRecyclerAdap
     }
 
     public int getIndexOfChosenSpeed() {
-        return getSpeedItem(speeds, 1);
+        return getSpeedItem(speeds);
     }
 
-    private int getSpeedItem(List<SpeedItems> items, Object value) {
+    private int getSpeedItem(List<SpeedItems> items) {
         int position = -1;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Optional<SpeedItems> foundItem = speeds.stream().filter(item -> item.getChoose() == (int) value).findFirst();
+            Optional<SpeedItems> foundItem = speeds.stream().filter(item -> item.getChoose() == (int) (Object) 1).findFirst();
             if (foundItem.isPresent()) position = items.indexOf(foundItem.get());
         } else {
-            position = speeds.indexOf(new SpeedItems((int) value));
+            position = speeds.indexOf(new SpeedItems((int) (Object) 1));
         }
         return position;
     }

@@ -32,16 +32,8 @@ public class SpeedItems {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public float getSpeed() {
         return speed;
-    }
-
-    public void setSpeed(float speed) {
-        this.speed = speed;
     }
 
     public int getChoose() {
@@ -52,7 +44,7 @@ public class SpeedItems {
         this.chosen = chosen;
     }
 
-    public boolean getChosen() {
+    public boolean isChosen() {
         return chosen == 1;
     }
 

@@ -34,18 +34,21 @@ public class MainActivity extends AppCompatActivity {
         player.prepare();
     }
 
+    @OptIn(markerClass = UnstableApi.class)
     @Override
     protected void onResume() {
         super.onResume();
         binding.playerView.onResumeActivity();
     }
 
+    @OptIn(markerClass = UnstableApi.class)
     @Override
     protected void onPause() {
         super.onPause();
         binding.playerView.onPauseActivity();
     }
 
+    @OptIn(markerClass = UnstableApi.class)
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -58,17 +61,20 @@ public class MainActivity extends AppCompatActivity {
         this.binding = null;
     }
 
+    @OptIn(markerClass = UnstableApi.class)
     @Override
     public void onUserLeaveHint() {
         binding.playerView.onUserLeaveHintActivity();
     }
 
+    @OptIn(markerClass = UnstableApi.class)
     @Override
     public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
         super.onPictureInPictureModeChanged(isInPictureInPictureMode);
         binding.playerView.onPictureInPictureModeChanged(isInPictureInPictureMode);
     }
 
+    @OptIn(markerClass = UnstableApi.class)
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);

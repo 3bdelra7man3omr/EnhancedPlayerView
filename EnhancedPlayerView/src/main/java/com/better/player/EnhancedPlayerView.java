@@ -45,7 +45,6 @@ import androidx.activity.result.ActivityResultRegistry;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
-import androidx.annotation.OptIn;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -80,7 +79,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
-@OptIn(markerClass = UnstableApi.class)
+@UnstableApi
 public class EnhancedPlayerView extends PlayerView implements View.OnClickListener, View.OnTouchListener, Listener, CustomDefaultTimeBar.ProgressChangeListener, View.OnLayoutChangeListener {
 
     private static final String ACTION_MEDIA_CONTROL = "media_control";
@@ -94,12 +93,11 @@ public class EnhancedPlayerView extends PlayerView implements View.OnClickListen
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private final PictureInPictureParams.Builder pipParamsBuilder = new PictureInPictureParams.Builder();
-
     private final ArrayList<RemoteAction> remoteActions = new ArrayList<>();
     private final List<SpeedItems> speedItemsList = new ArrayList<>();
-
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
     private final Handler hideControllerHandler = new Handler(Looper.getMainLooper());
+
     private GestureDetector gestureDetector;
     private boolean hideOnTouch = false;
     private ActivityResultLauncher<Intent> activityResultLauncher;
@@ -190,6 +188,7 @@ public class EnhancedPlayerView extends PlayerView implements View.OnClickListen
         initializeViews();
     }
 
+    @NonNull
     @SuppressLint("DefaultLocale")
     private static String formatTime(long milliseconds) {
         if (milliseconds < 0) return "00:00";
@@ -395,7 +394,7 @@ public class EnhancedPlayerView extends PlayerView implements View.OnClickListen
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(@NonNull View v) {
         if (v.getId() == playPauseButton.getId()) {
             if (VisibilityChecking()) ReturnSpeedCardBack();
             ValueAnimator scaleAni = ValueAnimator.ofFloat(1f, 0.9f);
@@ -578,7 +577,7 @@ public class EnhancedPlayerView extends PlayerView implements View.OnClickListen
         else return gestureDetector.onTouchEvent(event) || super.onTouchEvent(event);
     }
 
-    private boolean PerformChecks(MotionEvent event) {
+    private boolean PerformChecks(@NonNull MotionEvent event) {
         float x = event.getX();
         int width = getWidth();
 
@@ -607,6 +606,8 @@ public class EnhancedPlayerView extends PlayerView implements View.OnClickListen
                                 exoPlayer.setPlaybackSpeed(2.0f);
                                 AnimateAlpha(Speed2CardView, Speed2CardView.getAlpha(), 1f);
                             }, ViewConfiguration.getLongPressTimeout());
+                        } else {
+                            //rollback the vid like telegram
                         }
                     }
 
@@ -767,6 +768,7 @@ public class EnhancedPlayerView extends PlayerView implements View.OnClickListen
         timeLeftTextView.setText(formatTime(exoPlayer.getDuration() - position));
     }
 
+    @NonNull
     private ValueAnimator createValueAnimator(Object from, Object to, boolean Float, int duration, ValueAnimator.AnimatorUpdateListener updateListener) {
         ValueAnimator animator = Float ? ValueAnimator.ofFloat((float) from, (float) to) : ValueAnimator.ofInt((int) from, (int) to);
         animator.addUpdateListener(updateListener);
@@ -958,7 +960,8 @@ public class EnhancedPlayerView extends PlayerView implements View.OnClickListen
         animator.start();
     }
 
-    private int[] getRandomPosition(int width, int height, View view) {
+    @NonNull
+    private int[] getRandomPosition(int width, int height, @NonNull View view) {
         int availableWSpace = width - view.getWidth();
         int availableHSpace = height - view.getHeight();
 
@@ -1000,7 +1003,7 @@ public class EnhancedPlayerView extends PlayerView implements View.OnClickListen
         v.start();
     }
 
-    public void initializeActivityResult(ActivityResultRegistry register) {
+    public void initializeActivityResult(@NonNull ActivityResultRegistry register) {
         activityResultLauncher = register.register("PIP_Result", new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)

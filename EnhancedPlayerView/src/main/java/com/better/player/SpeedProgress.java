@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.OptIn;
 import androidx.media3.common.util.UnstableApi;
 import androidx.media3.common.util.Util;
 import androidx.media3.exoplayer.ExoPlayer;
@@ -25,7 +26,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-@UnstableApi
 public class SpeedProgress extends ProgressBar {
 
     private final float[] Speeds = new float[]{0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1f, 1.1f, 1.2f, 1.3f, 1.4f, 1.5f, 1.6f, 1.7f, 1.8f, 1.9f, 2f, 2.1f, 2.2f, 2.3f, 2.4f, 2.5f};
@@ -95,6 +95,7 @@ public class SpeedProgress extends ProgressBar {
         setMaxSetup();
     }
 
+    @OptIn(markerClass = UnstableApi.class)
     @Override
     protected synchronized void onDraw(@NonNull Canvas canvas) {
         float position = Util.constrainValue((float) getProgress() / getMax(), 0, 1) * getWidth();

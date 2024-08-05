@@ -19,11 +19,13 @@ import androidx.appcompat.widget.AppCompatImageView;
 public class Volume extends AppCompatImageView {
 
     private static final int NUM_CIRCLES = 3;
+
     private final Paint[] paints = new Paint[NUM_CIRCLES];
     private final ValueAnimator[] animator = new ValueAnimator[NUM_CIRCLES];
     private final ValueAnimator[] valueAnimator = new ValueAnimator[2];
     private final double[] volumes = new double[5];
     private final boolean[] changedColor = new boolean[NUM_CIRCLES];
+
     private Paint bitmapPaint;
     private Bitmap bitmap;
     private boolean drawCircles = true;
